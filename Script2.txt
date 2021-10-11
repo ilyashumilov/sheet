@@ -1,0 +1,219 @@
+function Claims() {
+
+  // import Claims
+  var main = SpreadsheetApp.openByUrl('https://docs.google.com/spreadsheets/d/1QBPmnxnWQ23eTmzBRkoBy8gzZw6SzKUZWnAe_Qj7xuQ/');
+  var s = main.getSheetByName('CLAIMS');
+  var range = s.getDataRange();
+  var data = range.getValues(); 
+
+  // import Customers
+  var main1 = SpreadsheetApp.openByUrl('https://docs.google.com/spreadsheets/d/13ixZ0dZhH16kFvLi84pMfe3WnaL6XDGKc2ERAqkDRAc/');
+  var s1 = main1.getSheetByName('A');
+  var range1 = s1.getDataRange();
+  var data1 = range1.getValues(); 
+
+  // import Suppliers
+  var main2 = SpreadsheetApp.openByUrl('https://docs.google.com/spreadsheets/d/13ixZ0dZhH16kFvLi84pMfe3WnaL6XDGKc2ERAqkDRAc/');
+  var s2 = main2.getSheetByName('B');
+  var range2 = s2.getDataRange();
+  var data2 = range2.getValues(); 
+
+
+  // Sorting regarding date
+
+  var lista = new Array();
+  lista.push(data[0])
+  
+  
+  for (row in data){
+    if ((data[row][0][4] == '6' || data[row][0][4] == '7' || data[row][0][4] == '8'|| data[row][0][4] == '9') && data[row][0][9] == '1'){
+      lista.push(data[row])
+      //Logger.log(data[row])
+    }
+  }
+  Logger.log(lista)
+  var cnt = 0;
+
+  var Juan_Carlos  = [['Juan Carlos','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',]];
+  var Gonzalo_Garcia = [['Gonzalo Garcia','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',]];
+  var Nikolay_Kudryashov = [['Nikolay Kudryashov','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',]];
+  var Christopher_Hans = [['Christopher Hans','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',]];
+  var Walter_Araujo = [['Walter Araujo','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',]];
+  var GREECE = [['GREECE','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',]];
+  var EUROPA = [['EUROPA','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',]];
+  var INDIA = [['INDIA','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',]];
+  var NUL =  [['NUL','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',]];
+
+  // def supplier's traiders
+
+
+
+
+
+  // Logger.log(lista)
+
+  for (row in lista){
+    for (row1 in data1){
+
+      if (data1[row1][1] == lista[row][12]){
+
+        // Logger.log(lista[row].length)
+        // Logger.log(Juan_Carlos[0].length)
+
+        // Logger.log(data1[row1][1])
+        // Logger.log(data1[row1][0])
+
+        if (data1[row1][0] == 'Juan Carlos' ){
+          Juan_Carlos.push(lista[row])
+          // Logger.log(lista[row])
+
+        }
+
+        if (data1[row1][0] == 'Gonzalo Garcia' ){
+          Gonzalo_Garcia.push(lista[row])
+        }
+
+        if (data1[row1][0] == 'Nikolay Kudryashov' || data1[row1][0] == 'Yury Bulgakov'){
+          Nikolay_Kudryashov.push(lista[row])
+          // Logger.log(data1[row1][0])
+        }
+
+        if (data1[row1][0] == 'Walter Araujo'){
+          Walter_Araujo.push(lista[row])
+        }
+ 
+        if (data1[row1][0] == 'Christopher Hans'){
+          Christopher_Hans.push(lista[row])
+        }
+
+
+        if (data1[row1][0] == 'GREECE' ){
+          GREECE.push(lista[row])
+        }
+
+        if (data1[row1][0] == 'EUROPA' ){
+          EUROPA.push(lista[row])
+        }
+
+        if (data1[row1][0] == 'INDIA' ){
+          INDIA.push(lista[row])
+        }
+        
+        if (data1[row1][0] == ''){
+          NUL.push(lista[row])
+        } 
+
+      }
+    }
+
+  } 
+  
+
+  var Juan_Carlos1  = [['Juan Carlos','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',]];
+  var Gonzalo_Garcia1 = [['Gonzalo Garcia','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',]];
+  var Christopher_Hans1 = [['Christopher Hans','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',]];
+  var NIkolay_Kudryashov1 = [['NIkolay Kudryashov','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',]];
+  var VIPA_USA = [['VIPA USA','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',]];
+  var VIPA_EU = [['VIPA_EU','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',]];
+  var VIPA_GR = [['VIPA GR','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',]];
+  var VIPA_UK = [['VIPA UK','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',]];
+  var RUSSIA = [['RUSSIA','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',]];
+  var NULL1 =  [['NUL','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',]];
+  for (row in lista){
+    for (row2 in data2){
+
+      if (data2[row2][1] == (lista[row][19])){
+
+        // Logger.log(data2[row2][1])
+        // Logger.log(data2[row2][0])
+
+        if (data2[row2][0] == 'Juan Carlos' ){
+          Juan_Carlos1.push(lista[row])
+        }
+
+        if (data2[row2][0] == 'Gonzalo Garcia' ){
+          Gonzalo_Garcia1.push(lista[row])
+        }
+
+        if (data2[row2][0] == 'Christopher Hans'){
+          Christopher_Hans1.push(lista[row])
+        }
+            
+         if (data2[row2][0] == 'NIkolay Kudryashov'){
+          NIkolay_Kudryashov1.push(lista[row])
+        }
+
+        if (data2[row2][0] == 'VIPA USA' ){
+          VIPA_USA.push(lista[row])
+        }
+
+        if (data2[row2][0] == 'VIPA EU' ){
+          VIPA_EU.push(lista[row])
+        }
+
+        if (data2[row2][0] == 'VIPA GR' ){
+          VIPA_GR.push(lista[row])
+        }
+
+        if (data2[row2][0] == 'VIPA UK' ){
+          VIPA_UK.push(lista[row])
+        }
+
+        if (data2[row2][0] == 'RUSSIA' ){
+          RUSSIA.push(lista[row])
+        }
+        
+        if (data2[row2][0] == '#Н/Д' ){
+          NULL1.push(lista[row])
+        } 
+
+      }
+    }
+  }
+
+
+ 
+  var output = Juan_Carlos.concat(Gonzalo_Garcia)
+  output = output.concat(Nikolay_Kudryashov)
+  output = output.concat(Christopher_Hans)
+  output = output.concat(Walter_Araujo)
+  output = output.concat(GREECE)
+  output = output.concat(EUROPA)
+  output = output.concat(INDIA)
+  output = output.concat(NUL)
+
+  var output1 = Juan_Carlos1.concat(Gonzalo_Garcia1)
+  output1 = output1.concat(Christopher_Hans1)
+  output1 = output1.concat(NIkolay_Kudryashov1)
+  output1 = output1.concat(VIPA_USA)
+  output1 = output1.concat(VIPA_EU)
+  output1 = output1.concat(VIPA_GR)
+  output1 = output1.concat(VIPA_UK)
+  output1 = output1.concat(RUSSIA)
+  output1 = output1.concat(NULL1)
+ 
+  // Logger.log(output)
+  
+  var rows = output.length;
+  var space = 'A2:' + 'AS' + (rows+1).toString()
+
+  var here = SpreadsheetApp.openByUrl('https://docs.google.com/spreadsheets/d/13ixZ0dZhH16kFvLi84pMfe3WnaL6XDGKc2ERAqkDRAc/')
+  var a = here.getSheetByName('CLIENTS')
+  var board = a.getRange(space);
+
+  board.setValues(output);
+  board.setBackground("red")
+
+
+  var rows = output1.length; 
+  var space = 'A2:' + 'AS' + (rows+1).toString()
+
+  var here = SpreadsheetApp.openByUrl('https://docs.google.com/spreadsheets/d/13ixZ0dZhH16kFvLi84pMfe3WnaL6XDGKc2ERAqkDRAc/')
+  var a = here.getSheetByName('SUPPLIERS')
+  var board = a.getRange(space);
+
+  board.setValues(output1);
+
+}  
+
+ 
