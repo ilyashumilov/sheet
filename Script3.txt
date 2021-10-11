@@ -1,0 +1,100 @@
+function importacion_Juan(){
+
+  // import CA
+  var main = SpreadsheetApp.openByUrl('https://docs.google.com/spreadsheets/d/12ti0j32GrAwq7-_R8N56yzawjN9hxkO8Y38AFDvuZ0A/');
+  var s = main.getSheetByName('OPS - CA');
+  var range = s.getDataRange();
+  var data = range.getValues(); 
+  
+  // import Caribbean
+  // var carribe = SpreadsheetApp.openByUrl('https://docs.google.com/spreadsheets/d/12ti0j32GrAwq7-_R8N56yzawjN9hxkO8Y38AFDvuZ0A/');
+  var s1 = main.getSheetByName('OPS - Caribbean');
+  var range1 = s1.getDataRange();
+  var data_caribe = range1.getValues(); 
+
+  // get size of a table
+  // var rows = s.getLastRow().toString();
+  // var rows = rows.replace(".0","");
+  // var space = 'A1:' + 'AA' + rows.toString()
+
+  Logger.log(data);
+
+  // array of clumns needed 
+  var columns = [0,1,3,8,11,21,23,25];
+
+  // arrays for collecting data drom CA
+  var fecha = new Array();
+  var fin = new Array();
+  var lista = new Array();
+  
+  // arrays for collecting data drom Caribean
+  var fecha1 = new Array();
+  var fin1 = new Array();
+  var lista1 = new Array();
+  
+  // Logger.log(lista)
+  
+
+  // filtrating DR and shipment in Caribbean
+  var cnt = 0;
+  for (row in data_caribe){
+  fecha1[cnt] = data_caribe[row][21];
+  if (data_caribe[row][21].length != 15 && (data_caribe[row][8] == 'Dominican Republic' || data_caribe[row][8] == 'dominican republic'))
+  {
+    lista1.push(cnt);
+  }
+  cnt = cnt + 1;
+  }
+
+  // making final array of needed data regarding DR
+  for (i in lista1){
+    var inter1 = new Array();
+    for (n in columns){
+       inter1.push(data_caribe[lista1[i]][columns[n]]);
+    }
+    fin1.push(inter1)
+  }
+
+
+  // filtrating shipment in CA
+  var cnt = 0;
+  for (row in data){
+    fecha[cnt] = data[row][21];
+    if (data[row][21].length != 15 && data[row][8] != 'Costa Rica'){
+      lista.push(cnt);
+    }
+    cnt = cnt + 1;
+  }
+ 
+  // Logger.log(fecha)
+  // Logger.log(lista)
+
+  // making final array of needed data regarding CA
+  for (i in lista){
+    var inter = new Array();
+    for (n in columns){
+       inter.push(data[lista[i]][columns[n]]);
+    }
+    fin.push(inter)
+  }
+
+  // Logger.log(fin)
+  // Logger.log(fin1)
+
+  // merge DR and CA data
+  for (y in fin1){
+    fin.push(fin1[y])
+   Logger.log(fin) 
+  }
+
+  var rows = fin.length; 
+  var space = 'A2:' + 'H' + (rows+1).toString()
+
+
+  var here = SpreadsheetApp.openByUrl('https://docs.google.com/spreadsheets/d/1gF5Voq88c2fs4hgtONl6y7_OWmC8hYbPSLmnJ8de7q4/')
+  var a = here.getSheetByName('Load control')
+  var board = a.getRange(space);
+
+  board.setValues(fin);
+
+}
