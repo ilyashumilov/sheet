@@ -1,0 +1,125 @@
+function myFunction() {
+  var main = SpreadsheetApp.openByUrl('https://docs.google.com/spreadsheets/d/1M0qurnHLF0LJ9oMv9-LTHiFxCmO-9yY_-_nKWIwbAVs/');
+  var s = main.getSheetByName('September 21');
+  var rows = s.getLastRow();
+  var space = 'A2:' + 'AX' + (rows).toString()
+  var range = s.getRange(space);
+  var september = range.getValues();
+
+  var s = main.getSheetByName('October 21');
+  var rows = s.getLastRow();
+  var space = 'A2:' + 'AX' + (rows).toString()
+  var range = s.getRange(space);
+  var october = range.getValues();
+
+  september = september.concat(october)
+
+  Logger.log(september.length)
+
+  var main = SpreadsheetApp.openByUrl('https://docs.google.com/spreadsheets/d/1noSPPkX5_3y5TZVw0y7gm4xGZN7Bw1x2RDejW0aCa_I/');
+  var s = main.getSheetByName('Shipments');
+  var rows = s.getLastRow();
+  var space = 'A2:' + 'F' + (rows).toString()
+  var range = s.getRange(space);
+  var exist = range.getValues();
+ 
+  var country = ['Costa Rica','El Salvador','Suriname','Chile','Honduras','Nicaragua','Panama','Guatemala',]
+  var countries = ['Belize',
+  'Costa Rica',
+  'El Salvador',
+  'Guatemala',
+  'Honduras',
+  'Mexico',
+  'Nicaragua',
+  'Panama',
+  'Argentina',
+  'Bolivia',
+  'Brazil',
+  'Chile',
+  'Colombia',
+  'Ecuador',
+  'French Guiana',
+  'Guiana',
+  'Paraguay',
+  'Peru',
+  'Suriname',
+  'Uruguay',
+  'Venezuela',
+  'Cuba',
+  'Dominican Republic',
+  'Haiti',
+  'Puerto Rico']
+
+  var medio = new Array();
+  for (i in september){
+    for (n in countries){
+      if (september[i][9] == countries[n]){
+        medio.push(september[i])
+      }
+    }
+  }
+
+  var here = SpreadsheetApp.openByUrl('https://docs.google.com/spreadsheets/d/1noSPPkX5_3y5TZVw0y7gm4xGZN7Bw1x2RDejW0aCa_I/')
+  var a = here.getSheetByName('Shipments');
+
+  for (i in exist){
+    for (n in country){
+      if (exist[i][0] == country[n]){
+        a.getRange('H'+ (Number(i)+2).toString()).setBackground("green");
+      }
+    }
+  }
+
+  var fin = new Array(); 
+  for (i in medio){
+    var lista = new Array();
+    lista.push(medio[i][7])
+    lista.push(medio[i][9])
+    lista.push(medio[i][17])
+    lista.push(medio[i][27])
+    lista.push(medio[i][29])
+    lista.push(medio[i][30])
+    fin.push(lista)
+  }
+  Logger.log(fin.length)
+
+
+
+
+  var final = new Array();
+  for (i in fin){
+    var Flag = 'False'
+    for (n in exist){
+
+      if (fin[i][2] == exist[n][2]){
+
+        if (fin[i][4].toString() != exist[n][4].toString()){
+          a.getRange('E'+ (Number(n)+2).toString()).setValue(fin[i][4]);
+          a.getRange('E'+ (Number(n)+2).toString()).setBackground("red");
+          a.getRange('K'+ (Number(n)+2).toString()).setValue('1');
+        }
+
+        if (fin[i][5].toString() != exist[n][5].toString()){
+          
+          a.getRange('F'+(Number(n)+2).toString()).setValue(fin[i][5]);
+          a.getRange('F'+(Number(n)+2).toString()).setBackground("red");       
+        }
+
+        Flag = 'True'
+      }
+    }
+    if (Flag == 'False'){
+      final.push(fin[i])
+      Logger.log(final.length)
+    }
+  }
+
+  var done = exist.length;
+  var rows = final.length;
+
+  var space = 'A' + (done).toString() + ':' + 'F' + (done+rows-1).toString();
+  Logger.log(space)
+
+  a.getRange(space).setValues(final);
+  // board.setBackground("red")
+}
